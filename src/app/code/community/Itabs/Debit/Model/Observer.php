@@ -167,16 +167,20 @@ class Itabs_Debit_Model_Observer
      */
     protected function _encryptPaymentData($payment)
     {
+      try{
         $method = $payment->getMethodInstance();
-        if ($method instanceof Itabs_Debit_Model_Debit) {
-            $info = $method->getInfoInstance();
-            if ($payment->getData('debit_swift') != '') {
-                $payment->setData('debit_swift', $info->encrypt($payment->getData('debit_swift')));
-            }
-            if ($payment->getData('debit_iban') != '') {
-                $payment->setData('debit_iban', $info->encrypt($payment->getData('debit_iban')));
-            }
-        }
+      }
+      catch(Exception $e){
+      }
+      if ($method instanceof Itabs_Debit_Model_Debit) {
+          $info = $method->getInfoInstance();
+          if ($payment->getData('debit_swift') != '') {
+              $payment->setData('debit_swift', $info->encrypt($payment->getData('debit_swift')));
+          }
+          if ($payment->getData('debit_iban') != '') {
+              $payment->setData('debit_iban', $info->encrypt($payment->getData('debit_iban')));
+          }
+      }
     }
 
     /**
